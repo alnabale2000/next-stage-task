@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import Header from './components/header';
 import CatList from './components/cat-list';
+import FloatingActionButton from './components/FBA';
 
 export default function App() {
 
@@ -11,6 +12,7 @@ export default function App() {
     <View style={styles.container}>
       <Header/>
       <CatList/>
+      <FloatingActionButton/>
       <StatusBar style="auto" />
     </View>
   );
@@ -21,4 +23,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+
 });
