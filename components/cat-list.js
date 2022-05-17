@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
 import { View, Text, StyleSheet, FlatList ,TouchableOpacity ,Modal,TouchableWithoutFeedback,Keyboard} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import AddingForm from './form';
-import IconButton from './icon-button';
-import { Alert } from 'react-native-web';
-import { setDisabled } from 'react-native/Libraries/LogBox/Data/LogBoxData';
-// import CatCard from './cat-card';
+import CustomForm from './form';
+import Carousel from './Carousel';
+import { catPics } from '../data/data';
+import { ScrollView } from 'react-native-web';
+import ScrollViewContext from 'react-native/Libraries/Components/ScrollView/ScrollViewContext';
+
 export default function CatList() {
 
     const [cats, setCats] = useState([
@@ -30,7 +31,6 @@ export default function CatList() {
 
     const editCat=(editCat)=>{
         // console.log(editCat);
-        console.log(editCat.name);
         const result= cats.map(cat => {
             if(cat.id===id) return {name:editCat.name,age:editCat.age,color:editCat.color,id:id};
             else{
@@ -51,6 +51,7 @@ export default function CatList() {
     return (
     <View style={styles.catsList}>
         <FlatList
+        
         keyExtractor={(item)=> item.id}
         data={cats}
         renderItem={({item})=>(
@@ -62,14 +63,13 @@ export default function CatList() {
                 </View>
                 <View style={styles.modification}>
 
-                    <TouchableOpacity style={styles.editBtn} onPress={()=> {
+                    <TouchableOpacity style={styles.iconBtn} onPress={()=> {
                         setId(item.id)
-                        setModalOpen([true,'edit'])}}
-                    >
+                        setModalOpen([true,'edit'])}}>
                         <MaterialIcons name="edit" size={24} color="#2388CE" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.delBtn} onPress={()=>deleteCat(item.id)}
-                    >
+
+                    <TouchableOpacity style={styles.iconBtn} onPress={()=>deleteCat(item.id)}>
                         <MaterialIcons name="delete" size={24} color="red" />
                     </TouchableOpacity>
                 </View> 
@@ -93,7 +93,7 @@ export default function CatList() {
                             style={styles.modalClose} 
                             onPress={() => setModalOpen([false,''])} 
                         />
-                        {modalOpen[1]=='add'?<AddingForm onSubmit={addCat} text='Add New Cat'/>:<AddingForm onSubmit={editCat} text='Edit Existing Cat'/>}
+                        {modalOpen[1]=='add'?<CustomForm onSubmit={addCat} text='Add New Cat'/>:<CustomForm onSubmit={editCat} text='Edit Existing Cat'/>}
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-around'
     },
-    delBtn:{
+    iconBtn:{
         flex:1,
         backgroundColor:'#bdbdbd',
         alignItems:"center",
@@ -141,14 +141,6 @@ const styles = StyleSheet.create({
         borderWidth:0.5,
         borderColor:"black"
         
-    },
-    editBtn:{
-        flex:1,
-        backgroundColor:'#bdbdbd',
-        alignItems:"center",
-        padding:12.5,   
-        borderWidth:0.5,
-        borderColor:"black"     
     },
     TouchableOpacityStyle: {
         position: 'absolute',

@@ -3,7 +3,7 @@ import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { globalStyles } from '../styles/global';
 import { Formik } from 'formik';
 import FlatButton from './form-button';
-export default function AddingForm({onSubmit,text}) {
+export default function CustomForm({onSubmit,text}) {
 
   return (
     <View style={globalStyles.container}>
@@ -27,7 +27,6 @@ export default function AddingForm({onSubmit,text}) {
 
                 <TextInput
                     style={globalStyles.input}
-                    multiline
                     placeholder='Cat Color(s)'
                     onChangeText={props.handleChange('color')}
                     value={props.values.color}
@@ -35,7 +34,7 @@ export default function AddingForm({onSubmit,text}) {
 
                 <TextInput 
                     style={globalStyles.input}
-                    placeholder='Age'
+                    placeholder='Age (1-15)'
                     onChangeText={props.handleChange('age')}
                     value={props.values.age}
                     keyboardType='numeric'
